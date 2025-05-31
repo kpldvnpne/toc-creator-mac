@@ -8,7 +8,7 @@
 import Foundation
 import PDFKit
 
-let pdfPath = "/Users/kapildev/Downloads/ielts 15 academic/Cambridge 15 - Full Version.pdf"
+let pdfPath = "path_to_file"
 let pdfUrl = URL(filePath: pdfPath)
 let document = PDFDocument(url: pdfUrl)!
 
@@ -578,4 +578,4 @@ document.outlineRoot = newOutlineRoot
 print("New number of children in TOC:", document.outlineRoot?.numberOfChildren ?? "No children")
 
 // Save the pdf back
-document.write(toFile: "/Users/kapildev/Downloads/ielts 15 academic/Cambridge 15 - Full Version - With TOC.pdf")
+document.write(toFile: "path_to_output_file")
