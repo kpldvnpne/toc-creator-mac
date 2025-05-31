@@ -29,8 +29,8 @@ for i in 0..<document.pageCount {
     
     let pageRect = page.bounds(for: PDFDisplayBox.mediaBox)
     print(pageRect.width, pageRect.height)
-//    let atPoint = CGPoint(x: 6 * 72, y: 72 * 4) // 0, 0 is at the left lower center, 72 dpi
-    let atPoint = CGPoint(x: pageRect.height, y: pageRect.width)
+    let min = min(pageRect.width, pageRect.height)
+    let atPoint = CGPoint(x: min, y: pageRect.height)
     
     newChild.destination = PDFDestination(page: page, at: atPoint)
     newOutline.insertChild(newChild, at: i)
