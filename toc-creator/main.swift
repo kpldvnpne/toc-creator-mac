@@ -578,4 +578,4 @@ document.outlineRoot = newOutlineRoot
 print("New number of children in TOC:", document.outlineRoot?.numberOfChildren ?? "No children")
 
 // Save the pdf back
-document.write(toFile: "/Users/kapildev/Downloads/ielts 15 academic/Cambridge 15 - Full Version - Edited.pdf")
+document.write(toFile: "/Users/kapildev/Downloads/ielts 15 academic/Cambridge 15 - Full Version - With TOC.pdf")
