@@ -20,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		2D3899EC2DEA83A00017CDE7 /* toc-creator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "toc-creator"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D389A2D2DEADCD80017CDE7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -44,6 +45,7 @@
 		2D3899E32DEA83A00017CDE7 = {
 			isa = PBXGroup;
 			children = (
+				2D389A2D2DEADCD80017CDE7 /* README.md */,
 				2D3899EE2DEA83A00017CDE7 /* toc-creator */,
 				2D3899ED2DEA83A00017CDE7 /* Products */,
 			);
