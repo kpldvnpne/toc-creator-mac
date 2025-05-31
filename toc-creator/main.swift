@@ -17,17 +17,20 @@ print("Number of children", outlineRoot?.numberOfChildren ?? "No children")
 
 print("Number of pages", document.pageCount)
 
-// TODO: Let's assign outline based on this
-// Conclusion: In most of the cases, the odd is assigned to even while the even is assigned to even. Hence, 1 would lead to 2
+ // Conclusion: In most of the cases, the odd is assigned to even while the even is assigned to even. Hence, 1 would lead to 2
+ // Changing the vlaue of at didn't help. Let's use PDFView instead.
 let newOutline = PDFOutline()
 for i in 0..<document.pageCount {
     let page = document.page(at: i)!
-    print("Page \(i) could be accessed")
+    print("Page \(i + 1) could be accessed. Label: \(page.label ?? "No Label ")")
     let newChild = PDFOutline()
     let pageNum = i + 1
     newChild.label = "Page \(pageNum)"
     
-    let atPoint = (pageNum % 2 == 0) ? CGPoint(x: 0.0, y: 0.0) : CGPoint(x: 1000, y: -1000)
+    let pageRect = page.bounds(for: PDFDisplayBox.mediaBox)
+    print(pageRect.width, pageRect.height)
+//    let atPoint = CGPoint(x: 6 * 72, y: 72 * 4) // 0, 0 is at the left lower center, 72 dpi
+    let atPoint = CGPoint(x: pageRect.height, y: pageRect.width)
     
     newChild.destination = PDFDestination(page: page, at: atPoint)
     newOutline.insertChild(newChild, at: i)
