@@ -15,10 +15,33 @@ let document = PDFDocument(url: pdfUrl)!
 let outlineRoot = document.outlineRoot
 print("Number of children", outlineRoot?.numberOfChildren ?? "No children")
 
+print("Number of pages", document.pageCount)
+
+//// TODO: Let's assign outline based on this
+//for i in 0..<document.pageCount {
+//    let _ = document.page(at: i)
+//    print("Page \(i) could be accessed")
+//}
+
 struct TocItem {
     var label: String = ""
     var pageNum: Int = 0
     var children: [TocItem] = []
+    
+    func toPdfOutline(document: PDFDocument) -> PDFOutline {
+        let tocItem = self
+        let pdfOutline = PDFOutline()
+        pdfOutline.label = tocItem.label
+        let pageNum = (tocItem.pageNum == 0) ? 0 : tocItem.pageNum - 1
+        print("For |", tocItem.label, "| Page number used: ", pageNum)
+        pdfOutline.destination = PDFDestination(page: document.page(at: pageNum)!, at: CGPoint(x: 0.0, y: 0.0))
+        
+        for (index, child) in tocItem.children.enumerated() {
+            let childOutline = child.toPdfOutline(document: document)
+            pdfOutline.insertChild(childOutline, at: index)
+        }
+        return pdfOutline
+    }
 }
 
 let outline: TocItem = TocItem(children: [
@@ -32,7 +55,7 @@ let outline: TocItem = TocItem(children: [
     ),
     TocItem(
         label: "Introduction",
-        pageNum: 6
+        pageNum: 6 // TODO: Fix this issue
     ),
     TocItem(
         label: "Test 1",
@@ -50,20 +73,7 @@ let outline: TocItem = TocItem(children: [
     ),
 ])
 
-func toPdfOutline(tocItem: TocItem, document: PDFDocument) -> PDFOutline {
-    let pdfOutline = PDFOutline()
-    pdfOutline.label = tocItem.label
-    let pageNum = (tocItem.pageNum == 0) ? 0 : tocItem.pageNum - 1
-    pdfOutline.destination = PDFDestination(page: document.page(at: pageNum)!, at: CGPoint(x: 0.0, y: 0.0))
-    
-    for (index, child) in tocItem.children.enumerated() {
-        let childOutline = toPdfOutline(tocItem: child, document: document)
-        pdfOutline.insertChild(childOutline, at: index)
-    }
-    return pdfOutline
-}
-
-let newOutlineRoot = toPdfOutline(tocItem: outline, document: document)
+let newOutlineRoot = outline.toPdfOutline(document: document)
 
 document.outlineRoot = newOutlineRoot
 
