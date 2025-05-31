@@ -24,8 +24,12 @@ for i in 0..<document.pageCount {
     let page = document.page(at: i)!
     print("Page \(i) could be accessed")
     let newChild = PDFOutline()
-    newChild.label = "Page \(i+1)"
-    newChild.destination = PDFDestination(page: page, at: CGPoint(x: 0.0, y: 0.0))
+    let pageNum = i + 1
+    newChild.label = "Page \(pageNum)"
+    
+    let atPoint = (pageNum % 2 == 0) ? CGPoint(x: 0.0, y: 0.0) : CGPoint(x: 1000, y: -1000)
+    
+    newChild.destination = PDFDestination(page: page, at: atPoint)
     newOutline.insertChild(newChild, at: i)
 }
 document.outlineRoot = newOutline
