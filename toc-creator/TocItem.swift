@@ -17,8 +17,10 @@ struct TocItem {
         let pdfOutline = PDFOutline()
         pdfOutline.label = tocItem.label
         let pageNum = (tocItem.pageNum == 0) ? 0 : tocItem.pageNum - 1
-        print("For |", tocItem.label, "| Page number used: ", pageNum)
-        pdfOutline.destination = PDFDestination(page: document.page(at: pageNum)!, at: CGPoint(x: 0.0, y: 0.0))
+        let page = document.page(at: pageNum)!
+        let pageSize = page.bounds(for: PDFDisplayBox.mediaBox)
+        let atPoint = CGPoint(x: min(pageSize.width, pageSize.height), y: pageSize.height)
+        pdfOutline.destination = PDFDestination(page: page, at: atPoint)
         
         for (index, child) in tocItem.children.enumerated() {
             let childOutline = child.toPdfOutline(document: document)
